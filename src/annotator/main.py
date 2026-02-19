@@ -55,7 +55,8 @@ class Main:
             if not kwargs:
                 raise ValueError("No models configured")
 
-        return kwargs
+        # Return a copy to avoid modifying the original config
+        return dict(kwargs)
 
     def _get_annotator_kwargs(self, name: str = None) -> Dict[str, Any]:
         # Select model: by name or first one
@@ -70,7 +71,8 @@ class Main:
             if not kwargs:
                 raise ValueError("No annotators configured")
 
-        return kwargs
+        # Return a copy to avoid modifying the original config
+        return dict(kwargs)
 
     def setup_annotator(
         self,

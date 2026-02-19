@@ -1,0 +1,35 @@
+# .cursor
+.cursor/
+
+# .DS_Store
+.DS_Store
+
+# .python-version
+.python-version
+
+# __pycache__
+__pycache__
+
+# jupyter
+*.ipynb
+
+# test files
+test_*.py
+
+# Python package development
+*.egg-info/
+build/
+dist/
+*.egg
+
+# directories
+configs/*
+
+# Coverage reports
+.coverage
+coverage.xml
+htmlcov/
+
+# *.json
+*.json
+

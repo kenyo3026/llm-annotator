@@ -7,10 +7,10 @@ from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field, field_validator
 from typing import Optional, List
 from dataclasses import asdict
-import pathlib
 
 from .main import Main
 from .annotator import AnnotationResponse
+from .utils import resolve_config_path
 
 
 # Pydantic models for request/response
@@ -67,7 +67,7 @@ class HealthResponse(BaseModel):
     version: str = Field(..., description="API version")
 
 
-def create_app(config_path: str = "../configs/config.yaml") -> FastAPI:
+def create_app(config_path: str = "configs/config.yaml") -> FastAPI:
     """
     Create and configure FastAPI application
 
@@ -77,6 +77,9 @@ def create_app(config_path: str = "../configs/config.yaml") -> FastAPI:
     Returns:
         Configured FastAPI application
     """
+    # Resolve config path
+    config_path = resolve_config_path(config_path)
+
     app = FastAPI(
         title="LLM Tag Annotator API",
         description="API for LLM-based multi-label text annotation",
@@ -218,7 +221,7 @@ app = create_app()
 def run_server(
     host: str = "0.0.0.0",
     port: int = 8000,
-    config_path: str = "../configs/config.yaml",
+    config_path: str = "configs/config.yaml",
     reload: bool = False
 ):
     """
@@ -252,7 +255,7 @@ def main():
     parser = argparse.ArgumentParser(description="Run LLM Tag Annotator API Server")
     parser.add_argument("--host", default="0.0.0.0", help="Host to bind to")
     parser.add_argument("--port", type=int, default=8000, help="Port to bind to")
-    parser.add_argument("-c", "--config", default="../configs/config.yaml", help="Path to config file")
+    parser.add_argument("-c", "--config", default="configs/config.yaml", help="Path to config file")
     parser.add_argument("--reload", action="store_true", help="Enable auto-reload for development")
 
     args = parser.parse_args()

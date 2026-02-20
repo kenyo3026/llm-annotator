@@ -3,6 +3,7 @@ import sys
 from rich.console import Console
 
 from .main import Main
+from .utils import resolve_config_path
 
 
 console = Console()
@@ -11,8 +12,11 @@ console = Console()
 def cmd_annotate(args):
     """Execute annotation command"""
     try:
+        # Resolve config path
+        config_path = resolve_config_path(args.config)
+
         # Initialize main
-        main = Main(config_path=args.config)
+        main = Main(config_path=config_path)
 
         # Execute annotation
         response = main.annotate(
@@ -41,7 +45,10 @@ def cmd_annotate(args):
 def cmd_list(args):
     """List available annotators and models"""
     try:
-        main = Main(config_path=args.config)
+        # Resolve config path
+        config_path = resolve_config_path(args.config)
+
+        main = Main(config_path=config_path)
 
         # List annotators
         annotators = main.list_annotators()
@@ -72,8 +79,8 @@ def main():
     # Global arguments
     parser.add_argument(
         '-c', '--config',
-        default='../configs/config.yaml',
-        help='Path to config file (default: ../configs/config.yaml)'
+        default='configs/config.yaml',
+        help='Path to config file (default: configs/config.yaml)'
     )
     parser.add_argument(
         '-a', '--annotator',

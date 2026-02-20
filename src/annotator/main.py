@@ -113,8 +113,8 @@ class Main:
         Execute annotation
 
         Args:
-            text: Text to annotate
-            annotator_id: Annotator ID to use. If None, uses first annotator.
+            context: Text to annotate
+            annotator_name: Annotator name to use. If None, uses first annotator.
             model_name: Model name to use. If None, uses first model.
 
         Returns:

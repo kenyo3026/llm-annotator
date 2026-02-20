@@ -10,11 +10,18 @@ class AnnotationResponseStatus:
     failed: str = "failed"
 
 @dataclass
+class AnnotationResponseMetadata:
+    """Base metadata for annotation response"""
+    raw_tags: Optional[List[str]] = None
+    raw_response: Optional[str] = None
+    error: Optional[str] = None
+
+@dataclass
 class AnnotationResponse:
     """Annotation result data structure"""
     tags: List[str]
-    confidence: float = None
-    metadata: Optional[Dict[str, Any]] = None
+    confidence: Optional[float] = None
+    metadata: Optional[AnnotationResponseMetadata] = None
     status: str = AnnotationResponseStatus.success
 
 @dataclass

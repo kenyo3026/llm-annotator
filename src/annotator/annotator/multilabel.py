@@ -2,7 +2,7 @@ import json
 from dataclasses import dataclass, asdict
 from typing import List
 
-from .base import AnnotatorBase, AnnotationResponse, AnnotationResponseStatus
+from .base import AnnotatorBase, AnnotationResponse, AnnotationResponseMetadata, AnnotationResponseStatus
 
 SYSTEM_INSTRUCTION_MULTILABEL = """You are a specialized text classification assistant. Your task is to analyze text content and assign relevant tags from a predefined label set.
 
@@ -45,11 +45,6 @@ USER_PROMPT_MULTILABEL = """<context>
 
 Analyze the above context and return relevant tags in JSON format."""
 
-@dataclass
-class AnnotationResponseMetadata:
-    raw_tags: List[str] = None
-    raw_response: str = None
-    error: str = None
 
 class MultiLabelAnnotator(AnnotatorBase):
     """Multi-label classifier (can only select from predefined labels)"""
@@ -66,7 +61,7 @@ class MultiLabelAnnotator(AnnotatorBase):
     def annotate(
         self,
         context: str,
-        return_as_dict: bool = True,
+        return_as_dict: bool = False,
     ) -> AnnotationResponse:
         """Select from predefined labels"""
         system_prompt = SYSTEM_INSTRUCTION_MULTILABEL.format(

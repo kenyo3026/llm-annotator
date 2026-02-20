@@ -1,8 +1,8 @@
 import json
 from dataclasses import dataclass, asdict
-from typing import List
+from typing import List, Optional
 
-from .base import AnnotatorBase, AnnotationResponse, AnnotationResponseStatus
+from .base import AnnotatorBase, AnnotationResponse, AnnotationResponseMetadata, AnnotationResponseStatus
 
 
 SYSTEM_INSTRUCTION_ZEROSHOT_MULTILABEL = """You are a specialized text classification assistant with zero-shot capability. Your task is to analyze text content and assign relevant tags, preferring suggested labels but allowing creation of new ones when necessary.
@@ -48,12 +48,10 @@ USER_PROMPT_ZEROSHOT_MULTILABEL = """<context>
 Analyze the above context and return relevant tags in JSON format."""
 
 @dataclass
-class AnnotationResponseMetadata:
-    raw_tags: List[str] = None
-    predefined_tags: List[str] = None
-    new_tags: List[str] = None
-    error: str = None
-    raw_response: str = None
+class ZeroShotMultiLabelAnnotationResponseMetadata(AnnotationResponseMetadata):
+    """Extended metadata for zero-shot annotation with predefined/new tag separation"""
+    predefined_tags: Optional[List[str]] = None
+    new_tags: Optional[List[str]] = None
 
 class ZeroShotMultiLabelAnnotator(AnnotatorBase):
     """Zero-shot multi-label classifier (allows generating new labels)"""
@@ -72,7 +70,7 @@ class ZeroShotMultiLabelAnnotator(AnnotatorBase):
     def annotate(
         self,
         context: str,
-        return_as_dict: bool = True,
+        return_as_dict: bool = False,
     ) -> AnnotationResponse:
         """Can select from predefined labels or generate new ones"""
         system_prompt = SYSTEM_INSTRUCTION_ZEROSHOT_MULTILABEL.format(
@@ -106,7 +104,7 @@ class ZeroShotMultiLabelAnnotator(AnnotatorBase):
             # Combine for final result
             tags = predefined_tags + new_tags
 
-            metadata = AnnotationResponseMetadata(
+            metadata = ZeroShotMultiLabelAnnotationResponseMetadata(
                 raw_tags=raw_tags,
                 predefined_tags=predefined_tags,
                 new_tags=new_tags,

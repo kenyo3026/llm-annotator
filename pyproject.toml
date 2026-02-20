@@ -14,11 +14,13 @@ dependencies = [
     "aiohttp>=3.9.0",
     "fastapi>=0.115.0",
     "uvicorn>=0.32.0",
+    "fastmcp>=0.2.0",
 ]
 
 [project.scripts]
 annotator = "annotator.cli:main"
 annotator-api = "annotator.app:main"
+annotator-mcp = "annotator.mcp:main"
 
 [tool.uv.sources]
 config-morpher = { git = "https://github.com/kenyo3026/configmorpher.git" }

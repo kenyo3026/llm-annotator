@@ -19,6 +19,10 @@ __pycache__
 
 # test files
 test_*.py
+!src/annotator/tests/*.py
+
+# test reports
+src/annotator/tests/reports/
 
 # Python package development
 *.egg-info/

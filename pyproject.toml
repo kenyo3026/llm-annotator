@@ -17,6 +17,11 @@ dependencies = [
     "fastmcp>=0.2.0",
 ]
 
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+]
+
 [project.scripts]
 annotator = "annotator.cli:main"
 annotator-api = "annotator.app:main"

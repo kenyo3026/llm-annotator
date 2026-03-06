@@ -1,5 +1,9 @@
+# venv
+.venv
+
 # .cursor
 .cursor/
+.cursorignore
 
 # .DS_Store
 .DS_Store

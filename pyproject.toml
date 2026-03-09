@@ -6,6 +6,7 @@ readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
     "argilla>=2.8.0",
+    "psycopg2-binary>=2.9.0",
     "config-morpher",
     "litellm>=1.80.11",
     "rich>=13.0.0",
@@ -29,3 +30,10 @@ annotator-mcp = "annotator.mcp:main"
 
 [tool.uv.sources]
 config-morpher = { git = "https://github.com/kenyo3026/configmorpher.git" }
+
+[tool.pytest.ini_options]
+markers = [
+    "integration: marks tests that hit real external services (DB, LLM)",
+]
+log_cli = true
+log_cli_level = "INFO"

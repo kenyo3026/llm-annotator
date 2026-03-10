@@ -7,7 +7,7 @@ requires-python = ">=3.11"
 dependencies = [
     "argilla>=2.8.0",
     "psycopg2-binary>=2.9.0",
-    "config-morpher",
+    "config-morpher @ git+https://github.com/kenyo3026/configmorpher.git",
     "litellm>=1.80.11",
     "rich>=13.0.0",
     "instructor>=1.0.0",
@@ -27,9 +27,6 @@ dev = [
 annotator = "annotator.cli:main"
 annotator-api = "annotator.app:main"
 annotator-mcp = "annotator.mcp:main"
-
-[tool.uv.sources]
-config-morpher = { git = "https://github.com/kenyo3026/configmorpher.git" }
 
 [tool.pytest.ini_options]
 markers = [

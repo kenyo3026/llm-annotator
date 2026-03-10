@@ -71,10 +71,12 @@ dump-feedbacks:
 		> $(DUMP_FILE)
 	@echo "Done! Saved to $(DUMP_FILE) ($(shell wc -l < $(DUMP_FILE)) rows)"
 
+PERSIST ?=
+
 .PHONY: annotate
 annotate:
 	@echo "Running annotation pipeline against database: $(DB_NAME)"
-	DB_NAME=$(DB_NAME) uv run pytest src/annotator/tests/test_annotation_pipeline.py::TestAnnotationPipeline::test_persist_pipeline -v -s
+	DB_NAME=$(DB_NAME) uv run python scripts/run_annotation_pipeline.py $(if $(PERSIST),--persist,)
 	@echo "Annotation pipeline complete!"
 
 .PHONY: all
